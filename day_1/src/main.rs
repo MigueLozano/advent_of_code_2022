@@ -1,4 +1,25 @@
 
+fn print_top_n_calories(calories_vector: Vec<Vec<u32>>, n: usize) {
+    let mut sum_of_calories =  calories_vector
+        .iter()
+        .map(|cals| cals
+             .iter()
+             .sum())
+        .collect::<Vec<u32>>();
+    sum_of_calories
+        .sort_by(|a, b| b.cmp(a));
+    let mut total_sum = 0u32;
+    sum_of_calories
+        .iter()
+        .enumerate()
+        .take(n)
+        .for_each(|(idx, cals)| {
+            println!("{}: {}", idx+1, cals);
+            total_sum += cals;
+        });
+    println!("Total sum: {}", total_sum);
+}
+
 fn get_calorie_vectors(content: String) -> Vec<Vec<u32>> {
     let mut result: Vec<Vec<u32>> = vec![];
     let mut vector: Vec<u32> = vec![];
@@ -19,14 +40,7 @@ fn main() {
     let file_content = std::fs::read_to_string(file_name)
         .expect("Could not read file");
     let vectors = get_calorie_vectors(file_content);
-    let max: u32 = vectors
-        .iter()
-        .map(|cals| cals
-             .iter()
-             .sum())
-        .max()
-        .unwrap();
+    print_top_n_calories(vectors, 3);
 
-    println!("Max calories: {}", max);
     println!("done.");
 }
