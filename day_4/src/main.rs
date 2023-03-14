@@ -14,6 +14,15 @@ fn main() {
         .count();
 
     println!("{:?}", count);
+
+    let count = file_content
+        .lines()
+        .map(|line| get_sections(line))
+        .filter(|line| {
+            return !(line[0][0] > line[1][1] || line[0][1] < line[1][0])
+        })
+        .count();
+    println!("{:?}", count);
 }
 
 fn get_sections(line: &str) -> Vec<Vec<u32>> {
