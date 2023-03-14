@@ -1,5 +1,4 @@
 
-
 fn main() {
     let file_name = "resources/input.txt";
     let file_content = std::fs::read_to_string(file_name)
